@@ -8,7 +8,8 @@ import { Title } from './title';
 import { XLargeDirective } from './x-large';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-// import { DataService } from './../../../../testing/src/app/services/data.service';
+import { DataService } from './../services/dataService.service';
+
 
 @Component({
   /**
@@ -44,23 +45,15 @@ export class HomeComponent implements OnInit {
   constructor(
     public appState: AppState,
     public title: Title,
-    // private dataService: DataService
+    private dataService: DataService
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
-    this.products = [ {
-      id: 1,
-      name: 'wine1',
-      sku: 'sku1'
-    },{
-      id: 2,
-      name: 'wine1',
-      sku: 'sku2'
-    } ];
-    // this.dataService.getProducts().subscribe((posts) => {
-    //   console.log(posts);
-    // });
+    this.dataService.getProducts().subscribe((products) => {
+      console.log('products',products);
+      this.products = products;
+    });
     /**
      * this.title.getData().subscribe(data => this.data = data);
      */
@@ -75,11 +68,17 @@ export class HomeComponent implements OnInit {
   public deleteProduct(id) {
     console.log('Im deleting product with ID:' + id);
     console.log('Calling delete method from Service');
+    // this.dataService.deleteProduct(id).subscribe((response) => {
+    //   console.log(response);
+    // });
   }
 
   public createProduct(name, sku){
     console.log('Im creating a new product with name:' + name + ' and SKU: ' + sku);
     console.log('Calling post method from Service');
+    // this.dataService.createProduct({name: name, sku: sku}).subscribe((response) => {
+    //   console.log(response);
+    // });
   }
 }
 

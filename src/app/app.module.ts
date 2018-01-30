@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,7 +19,7 @@ import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 import { DevModuleModule } from './+dev-module';
-// import { DataService } from './services/dataService';
+import { DataService } from './services/dataService.service';
 
 
 import '../styles/styles.scss';
@@ -58,7 +57,6 @@ type StoreType = {
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    HttpModule,
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
@@ -76,8 +74,8 @@ type StoreType = {
    */
   providers: [
     environment.ENV_PROVIDERS,
-    APP_PROVIDERS
-    // DataService
+    APP_PROVIDERS,
+    DataService
   ]
 })
 export class AppModule {}
