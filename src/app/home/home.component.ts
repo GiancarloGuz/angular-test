@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
    */
   public localState = { value: '' };
   public products: Product[];
+  public searchedProduct: Product;
   /**
    * TypeScript public modifiers
    */
@@ -68,9 +69,9 @@ export class HomeComponent implements OnInit {
   public deleteProduct(id) {
     console.log('Im deleting product with ID:' + id);
     console.log('Calling delete method from Service');
-    // this.dataService.deleteProduct(id).subscribe((response) => {
-    //   console.log(response);
-    // });
+    this.dataService.deleteProduct(id).subscribe((response) => {
+      console.log(response);
+    });
   }
 
   public createProduct(name, sku){
@@ -79,6 +80,18 @@ export class HomeComponent implements OnInit {
     // this.dataService.createProduct({name: name, sku: sku}).subscribe((response) => {
     //   console.log(response);
     // });
+  }
+
+  public search(id){
+    console.log('submit button pressed', id);
+    this.dataService.getProduct(id).subscribe((response) => {
+      console.log(response);
+      this.searchedProduct = {
+        id: response['_id'],
+        name: response['name'],
+        sku: response['sku']
+      };
+    });
   }
 }
 

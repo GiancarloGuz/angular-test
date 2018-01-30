@@ -1,10 +1,19 @@
 <div>
+  <div>
+    <h1>Get Product Info</h1>
+    <label for="id">Id:</label>
+    <input #id>
+    <button (click)="search('5a6f53e6bd966f1785e2e844')">Search</button>
+    <div *ngIf="searchedProduct">
+      <label>Product is: {{product.name}} , SKU: {{product.sku}}</label>
+    </div>
+  </div>
   <h1 x-large class="sample-content">
     <h2>List of Products</h2>
     <ul>
-      <li *ngFor="let product of products">
-        {{ product.id }}: {{product.name}} , SKU: {{product.sku}}
-        <button (click)="deleteProduct(product.id)">X</button>
+      <li *ngFor="let product of products; let i = index">
+        {{ i }}: {{product.name}} , SKU: {{product.sku}}
+        <button (click)="deleteProduct(product['_id']['$oid'])">X</button>
       </li>
     </ul>
   </h1>
