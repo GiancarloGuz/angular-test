@@ -2,7 +2,13 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
@@ -31,7 +37,21 @@ import { DataService } from './../services/dataService.service';
   /**
    * Every Angular template is first compiled by the browser before Angular runs it's compiler.
    */
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  animations: [
+    trigger('listState', [
+      state('inactive', style({
+        backgroundColor: '#eee',
+        transform: 'scale(1)'
+      })),
+      state('active',   style({
+        backgroundColor: '#cfd8dc',
+        transform: 'scale(1.1)'
+      })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
   /**
@@ -40,6 +60,7 @@ export class HomeComponent implements OnInit {
   public localState = { value: '' };
   public products: Product[];
   public searchedProduct: Product;
+  public taggleUpdated: string;
   /**
    * TypeScript public modifiers
    */
@@ -47,16 +68,22 @@ export class HomeComponent implements OnInit {
     public appState: AppState,
     public title: Title,
     private dataService: DataService
-  ) {}
+  ) {
+    this.taggleUpdated = 'inactive';
+  }
 
   public ngOnInit() {
     console.log('hello `Home` component');
-    this.dataService.getProducts().subscribe((fetchedProducts) => {
-      this.products = fetchedProducts;
-    });
+    this.bringProducts();
     /**
      * this.title.getData().subscribe(data => this.data = data);
      */
+  }
+
+  public bringProducts() {
+    this.dataService.getProducts().subscribe((fetchedProducts) => {
+      this.products = fetchedProducts;
+    });
   }
 
   public submitState(value: string) {
@@ -65,19 +92,25 @@ export class HomeComponent implements OnInit {
     this.localState.value = '';
   }
 
-  public deleteProduct(id) {
+  public deleteProduct(id, arrayPos) {
+    this.taggleUpdated = 'active';
     console.log('Im deleting product with ID:' + id);
     console.log('Calling delete method from Service');
     this.dataService.deleteProduct(id).subscribe((response) => {
       console.log(response);
+      this.bringProducts();
+      this.taggleUpdated = 'inactive';
     });
   }
 
   public createProduct(name, sku){
+    this.taggleUpdated = 'active';
     console.log('Im creating a new product with name:' + name + ' and SKU: ' + sku);
     console.log('Calling post method from Service');
     this.dataService.postProduct({name: name, sku: sku}).subscribe((response) => {
       console.log(response);
+      this.taggleUpdated = 'inactive';
+      this.bringProducts();
     });
     return false;
   }
