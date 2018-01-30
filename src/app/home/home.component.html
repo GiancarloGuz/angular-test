@@ -20,11 +20,12 @@
 
   <div>
     <h1>Create a new Product</h1>
-    <form (submit)="createProduct()">
+    <form (submit)="createProduct(name.value, sku.value)">
       <label for="name">Name:</label>
       <input #name>
       <label for="name">SKU:</label>
-      <input #sky>
+      <input #sku>
+      <button>Submit</button>
     </form>
   </div>
   <hr>

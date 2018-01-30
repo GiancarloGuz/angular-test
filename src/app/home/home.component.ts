@@ -51,9 +51,8 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit() {
     console.log('hello `Home` component');
-    this.dataService.getProducts().subscribe((products) => {
-      console.log('products',products);
-      this.products = products;
+    this.dataService.getProducts().subscribe((fetchedProducts) => {
+      this.products = fetchedProducts;
     });
     /**
      * this.title.getData().subscribe(data => this.data = data);
@@ -77,9 +76,10 @@ export class HomeComponent implements OnInit {
   public createProduct(name, sku){
     console.log('Im creating a new product with name:' + name + ' and SKU: ' + sku);
     console.log('Calling post method from Service');
-    // this.dataService.createProduct({name: name, sku: sku}).subscribe((response) => {
-    //   console.log(response);
-    // });
+    this.dataService.postProduct({name: name, sku: sku}).subscribe((response) => {
+      console.log(response);
+    });
+    return false;
   }
 
   public search(id){
