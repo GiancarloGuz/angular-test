@@ -5,14 +5,14 @@
     <input #id>
     <button (click)="search(id.value)">Search</button>
     <div *ngIf="searchedProduct">
-      <label>Product is: {{product.name}} , SKU: {{product.sku}}</label>
+      <label>Product is: {{searchedProduct.name}} , SKU: {{searchedProduct.sku}}</label>
     </div>
   </div>
-  <div [@listState]="taggleUpdated">
+  <div [@listState]="taggleUpdated" style="width:80%;">
     <h1 x-large class="sample-content">
       <h2>List of Products</h2>
       <ul>
-        <li *ngFor="let product of products; let i = index">
+        <li *ngFor="let product of products; let i = index" class="productItem">
           {{ i }}: {{product.name}} , SKU: {{product.sku}}
           <button (click)="deleteProduct(product['_id']['$oid'], i)">X</button>
         </li>

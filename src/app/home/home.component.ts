@@ -41,7 +41,7 @@ import { DataService } from './../services/dataService.service';
   animations: [
     trigger('listState', [
       state('inactive', style({
-        backgroundColor: '#eee',
+        backgroundColor: '#fff',
         transform: 'scale(1)'
       })),
       state('active',   style({
@@ -115,10 +115,10 @@ export class HomeComponent implements OnInit {
     return false;
   }
 
-  public search(id){
+  public search(id) {
     console.log('submit button pressed', id);
     this.dataService.getProduct(id).subscribe((response) => {
-      console.log(response);
+      console.log('response', response);
       this.searchedProduct = {
         id: response['_id'],
         name: response['name'],
