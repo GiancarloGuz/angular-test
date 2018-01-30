@@ -112,7 +112,17 @@ export class HomeComponent implements OnInit {
       this.taggleUpdated = 'inactive';
       this.bringProducts();
     });
-    return false;
+  }
+
+  public updateProduct(id, name, sku){
+    // this.taggleUpdated = 'active';
+    console.log('Im update a product with name:' + name + ' and SKU: ' + sku);
+    console.log('Calling put method from Service');
+    // this.dataService.putProducts({id, name, sku}).subscribe((response) => {
+    //   console.log(response);
+      // this.taggleUpdated = 'inactive';
+    //   this.bringProducts();
+    // });
   }
 
   public search(id) {
