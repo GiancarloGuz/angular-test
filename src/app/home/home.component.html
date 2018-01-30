@@ -1,6 +1,23 @@
 <div>
-  <h1 x-large class="sample-content">Your Content Here</h1>
+  <h1 x-large class="sample-content">
+    <h2>List of Products</h2>
+    <ul>
+      <li *ngFor="let product of products">
+        {{ product.id }}: {{product.name}} , SKU: {{product.sku}}
+        <button (click)="deleteProduct(product.id)">X</button>
+      </li>
+    </ul>
+  </h1>
 
+  <div>
+    <h1>Create a new Product</h1>
+    <form (submit)="createProduct()">
+      <label for="name">Name:</label>
+      <input #name>
+      <label for="name">SKU:</label>
+      <input #sky>
+    </form>
+  </div>
   <hr>
 
   <div>

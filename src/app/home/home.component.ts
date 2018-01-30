@@ -6,6 +6,9 @@ import {
 import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+// import { DataService } from './../../../../testing/src/app/services/data.service';
 
 @Component({
   /**
@@ -34,16 +37,30 @@ export class HomeComponent implements OnInit {
    * Set our default values
    */
   public localState = { value: '' };
+  public products: Product[];
   /**
    * TypeScript public modifiers
    */
   constructor(
     public appState: AppState,
-    public title: Title
+    public title: Title,
+    // private dataService: DataService
   ) {}
 
   public ngOnInit() {
     console.log('hello `Home` component');
+    this.products = [ {
+      id: 1,
+      name: 'wine1',
+      sku: 'sku1'
+    },{
+      id: 2,
+      name: 'wine1',
+      sku: 'sku2'
+    } ];
+    // this.dataService.getProducts().subscribe((posts) => {
+    //   console.log(posts);
+    // });
     /**
      * this.title.getData().subscribe(data => this.data = data);
      */
@@ -54,4 +71,20 @@ export class HomeComponent implements OnInit {
     this.appState.set('value', value);
     this.localState.value = '';
   }
+
+  public deleteProduct(id) {
+    console.log('Im deleting product with ID:' + id);
+    console.log('Calling delete method from Service');
+  }
+
+  public createProduct(name, sku){
+    console.log('Im creating a new product with name:' + name + ' and SKU: ' + sku);
+    console.log('Calling post method from Service');
+  }
+}
+
+interface Product {
+  id: any;
+  name: string;
+  sku: string;
 }
